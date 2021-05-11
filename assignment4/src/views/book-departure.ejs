@@ -1,0 +1,30 @@
+<!--include the templates-->
+<head>
+    <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+<form action="/departure" method="POST">
+    <!--    form elements below-->
+    <div>
+        <label for="departure">Departure</label>
+        <!--        a dropdown list containing departure airports-->
+        <select id = "departure" name="departure" required>
+            <% for (var i=0; i<departureAirports.length; i++) { %>
+            <option>
+                <%=departureAirports[i].airportIATA + ", " +
+                departureAirports[i].city + ", " +
+                departureAirports[i].country%></option>
+            <% } %>
+        </select>
+    </div>
+<!--    button to submit form-->
+    <button type="submit" class="btn btn-primary">Next</button>
+</form>
+
+</body>

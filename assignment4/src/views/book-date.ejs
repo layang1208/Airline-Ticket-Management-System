@@ -1,0 +1,63 @@
+<!--include the templates-->
+<head>
+    <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+<!--include to use jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<form action="/date" method="POST">
+    <!--    form elements below-->
+    <div>
+        <label for="departure">Departure: <%=departure%> </label>
+    </div>
+    <div>
+        <label for="arrival">Arrival: <%=arrival%> </label>
+    </div>
+    <div>
+        <label for="travelDate">Travel date</label>
+<!--        the date box, because we only have 2020 data in our database, limit min and max dates-->
+        <input type="date" id="travelDate" name="travelDate"
+               min="2020-01-01" max="2020-11-24" required>
+<!--        checkbox for if the client has flexible travel dates-->
+        <input type="checkbox" id="isFlexible" name="isFlexible" rel="isFlexible">
+        <label for="isFlexible">I am flexible within </label>
+<!--        a dropdown box lets user choose how many days he is flexible within-->
+        <select name = "flexDays" id = "flexDays" disabled="disabled">
+            <option selected disabled>choose days</option>
+            <option>1 day</option>
+            <option>2 days</option>
+            <option>3 days</option>
+            <option>4 days</option>
+            <option>5 days</option>
+            <option>6 days</option>
+            <option>7 days</option>
+        </select>
+<!--        this button will submit the form as well, but redirect to find deal page -->
+        <button type="submit" class="btn btn-primary" id="dealButton" formaction="/deal" disabled>Find best deal</button>
+    </div>
+    <a href="/arrival" class="btn btn-info" role="button" style="float: left;">Back</a>
+    <button type="submit" class="btn btn-primary" style="float: right;">Next</button>
+</form>
+
+<!--jQuery scripts below-->
+<script>
+    // enable the flex days drop down if is flexible box checked
+    $(function(){
+        $("[rel=isFlexible]").click(function(){
+            $("#flexDays").attr("disabled", false);
+        });
+    });
+
+    //after flex days is selected, enable find deal button to be clicked
+    $('#flexDays').one('change', function() {
+        $('#dealButton').prop('disabled', false);
+    });
+</script>
+</body>

@@ -1,0 +1,17 @@
+<!--a simple login page-->
+<h1>Login</h1>
+<form action="/login" method="POST">
+    <!--    form elements below-->
+    <div>
+        <label for="username">Name</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+<!--    submit to login-->
+    <button type="submit">Login</button>
+</form>
+<!--reference back to register-->
+<a href="/register">Register</a>

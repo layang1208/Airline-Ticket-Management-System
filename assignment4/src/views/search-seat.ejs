@@ -1,0 +1,71 @@
+<!--include the templates-->
+
+<head>
+    <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('partials/header'); %>
+    </header>
+
+    <!--    form elements below-->
+    <div>
+        <label for="departure">Departure: <%=departure%> </label>
+    </div>
+    <div>
+        <label for="arrival">Arrival: <%=arrival%> </label>
+    </div>
+    <div>
+        <label for="travelDate">Travel date: <%=travelDate%> </label>
+    </div>
+
+    <!--get query results of suitable flights  -->
+    <div class="table-wrapper">
+<!--        check if there are any available seats-->
+        <% if (seats.length > 0) {%>
+        <form action="/passenger" method="POST" name="seatsForm" id="seatsForm">
+            <table class="table table-hovered" id="seatsTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Airline</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Flight No</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Departure Date</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Departure Time</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Seat No</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Status</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Price</th>
+                        <th style="text-align: center; vertical-align: middle;" scope="col">Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+<!--                loop to show all available seats on the selected flight-->
+                    <% for (var i = 0; i< seats.length; i++) { %>
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;"><%= seats[i].airlineName %></td>
+                        <td style="text-align: center; vertical-align: middle;"><%= seats[i].flightNo %></td>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <%= seats[i].departureDate.toISOString().split('T')[0] %></td>
+                        <td style="text-align: center; vertical-align: middle;"><%= seats[i].departureTime %></td>
+                        <td style="text-align: center; vertical-align: middle;"><%= seats[i].seatNo %></td>
+                        <td style="text-align: center; vertical-align: middle;"><%= seats[i].seatStatus %></td>
+                        <td style="text-align: center; vertical-align: middle;"><%= seats[i].seatPrice %></td>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <a href="/passenger/<%= seats[i].seatNo %>&<%= seats[i].seatPrice %>"
+                               class="btn btn-sm btn-success">Book</a>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </form>
+
+<!--        if not, let the user know-->
+        <% } else { %>
+        <p class="text-center">All seats sold out.</p>
+        <% } %>
+    </div>
+
+    <a href="/date" class="btn btn-info" role="button">Back</a>
+</body>

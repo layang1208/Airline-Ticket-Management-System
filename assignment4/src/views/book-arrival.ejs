@@ -1,0 +1,64 @@
+<!--include the templates-->
+<head>
+    <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+<form action="/arrival" method="POST">
+    <!--    form elements below-->
+    <div>
+        <label for="departure">Departure: <%=departure%> </label>
+    </div>
+
+    <div>
+        <label for="arrival">Arrival</label>
+        <!--        a data list element containing arrival airports-->
+        <input type="text" id="arrival" name="arrival" list="arrivalList" required>
+        <datalist id="arrivalList">
+            <% for (var i=0; i<arrivalAirports.length; i++) { %>
+            <option><%=arrivalAirports[i].airportIATA + ", " +
+                arrivalAirports[i].city + ", " +
+                arrivalAirports[i].country%></option>
+            <% } %>
+        </datalist>
+    </div>
+
+<!--    display top 5 destination from the departure city-->
+    <div>
+        <label for="topDestinations">Top 5 Destinations from <%=departure%> in the past 30 days: </label>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center; vertical-align: middle;" scope="col">City</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Country</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Tickets Sold</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Average Price</th>
+            </tr>
+            </thead>
+            <tbody>
+<!--            loop for 5 times to get top 5-->
+            <% for (var i=0; i<5; i++) { %>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"><%= topDestinations[i].city %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= topDestinations[i].country %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= topDestinations[i].ticketsSold %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= topDestinations[i].avgPrice %></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+<!--    two buttons for back and next each left and right aligned in the container -->
+    <a href="/departure" class="btn btn-info" role="button" style="float: left;">Back</a>
+    <button type="submit" class="btn btn-primary" style="float: right;">Next</button>
+</form>
+
+</body>

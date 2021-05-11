@@ -1,0 +1,72 @@
+<!--include the templates-->
+<head>
+    <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+<!--    form elements below-->
+<div>
+    <label for="departure">Departure: <%=departure%> </label>
+</div>
+<div>
+    <label for="arrival">Arrival: <%=arrival%> </label>
+</div>
+<div>
+    <label for="travelDate">Travel date: <%=travelDate%> </label>
+</div>
+
+<!--get query results of suitable flights  -->
+<div class="table-wrapper">
+<!--    check if there are any available flights-->
+    <% if (flights.length > 0) {%>
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Airline</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Flight No</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Departure</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Arrival</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Departure Date</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Departure Time</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Arrival Date</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Arrival Time</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Tickets Left</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Ticket Price</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+<!--            loop through and show all flights-->
+            <% flights.forEach((flight, index) => { %>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.airlineName %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.flightNo %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.departureAirportIATA %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.arrivalAirportIATA %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.departureDate.toISOString().split('T')[0] %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.departureTime %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.arrivalDate.toISOString().split('T')[0] %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.arrivalTime %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.seatsAvailable %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= flight.seatPrice %></td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <a href="/flight/<%= flight.flightNo %>&<%= flight.departureDate.toISOString().split('T')[0] %>"
+                           class="btn btn-sm btn-success">Book</a>
+                    </td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p class="text-center">No flights found on <%=travelDate%>, please go back and try another date.</p>
+    <% } %>
+</div>
+
+<a href="/date" class="btn btn-info" role="button">Back</a>
+
+</body>

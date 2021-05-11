@@ -1,0 +1,1 @@
+The SQL folder contains DDL statements that are relevant to what we did in this assignment. Additionally, a MySQL data export is uploaded here with sample data values that we will use in the demo as well. Because no changes were made to the database itself after assignment 3, everything in the SQL folder would be the same as assignment 3.

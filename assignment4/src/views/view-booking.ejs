@@ -1,0 +1,65 @@
+<!--include the templates-->
+<head>
+    <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+<header>
+    <%- include('partials/header'); %>
+</header>
+
+<div class="table-wrapper">
+<!--    check if the user has any bookings under his name -->
+    <% if (bookings.length > 0) {%>
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Confirmation No</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Booking Status</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Number of Tickets</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Departure Date</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Flight No</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Seat No</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Travel Document</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Points Earned</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Transaction Date</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Transaction Amount</th>
+                <th style="text-align: center; vertical-align: middle;" scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+<!--            loop to show all bookings-->
+            <% bookings.forEach((booking, index) => { %>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.confirmationNo %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.bookingStatus %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.numSeatsBooked %></td>
+                    <!--                    convert date to YYYY-MM-DD format-->
+                    <td style="text-align: center; vertical-align: middle;">
+                        <%= booking.departureDate.toISOString().split('T')[0] %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.flightNo %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.seatNo %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.travelDocument %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.numPointsEarned %></td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <%= booking.transactionDate.toISOString().split('T')[0] %></td>
+                    <td style="text-align: center; vertical-align: middle;"><%= booking.transactionAmount %></td>
+                    <td style="text-align: center; vertical-align: middle;">
+<!--                        only show the cancel button if the booking is in booked status-->
+                        <% if (booking.bookingStatus === 'Booked'){%>
+                        <a href="/cancel/<%= booking.confirmationNo %>"
+                           class="btn btn-sm btn-danger">Cancel</a>
+                        <%}%>
+                    </td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+<!--    if user doesn't have any bookings yet, let the user know and direct to book flight page-->
+    <% } else { %>
+        <p class="text-center">You don't have any bookings yet. Go <a href="/departure" >here</a> to book a flight.</p>
+    <% } %>
+</div>
+
+</body>
